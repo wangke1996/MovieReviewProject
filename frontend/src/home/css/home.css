@@ -1,0 +1,26 @@
+
+.align-center {
+    text-align: center;
+}
+
+.reel article {
+    margin: 0 2em;
+}
+
+.reel .image img {
+    width: 270px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+#features .image img {
+    width: 368px;
+    height: 256px;
+    margin: 0 auto;
+}
+
+#footer .image img {
+    width: 175px;
+    height: 139px;
+    margin: 0 auto;
+}
