@@ -3,6 +3,11 @@ import {Chart, Geom, Axis, Tooltip, Coord} from "bizcharts";
 import DataSet from "@antv/data-set";
 
 class FavoriteType extends React.Component {
+    constructor(props) {
+        super(props);
+        this.props.flag = "";
+    }
+
     render() {
         const {DataView} = DataSet;
         const data = [{type: "爱情", num: 90}, {type: "喜剧", num: 40}, {type: "动作", num: 120}, {type: "科幻", num: 426}, {
@@ -24,13 +29,17 @@ class FavoriteType extends React.Component {
         const cols = {
             score: {
                 min: 0,
-                max: 500
+                max: 400
             }
         };
         return (
-            <div>
+            <div className={"6u "+this.props.flag}  id="favoriteType">
+                <header>
+                    <h2>看了<span className="emphatic">426</span>部科幻电影</h2>
+                    <span className="byline">资深<span className="emphatic">科幻迷</span></span>
+                </header>
                 <Chart
-                    height={window.innerHeight}
+                    height={400}
                     data={dv}
                     padding={[20, 20, 95, 20]}
                     scale={cols}
@@ -81,4 +90,5 @@ class FavoriteType extends React.Component {
         );
     }
 }
+
 export default FavoriteType

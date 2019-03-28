@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
 import '../css/home.css';
-import MovieAbstract from './movieAbstract'
+import MovieInTheater from '../../home/js/movieInTheater'
 
 class Home extends Component {
-    renderMovieAbastract(i) {
-        return <MovieAbstract Sourcelink={"/webTemplate/images/pic0" + (i%5 +1)+ ".jpg"} Star={i % 5 + (i % 2) / 2}
-                              Title={"Movie " + i}
-                              Paragraph={"Movie " + i + "is shown above, and this is a boring placeholder paragraph！"}/>
-    }
 
     render() {
         let prefix = process.env.PUBLIC_URL;
@@ -22,32 +17,7 @@ class Home extends Component {
                     </span>
                     <hr/>
                 </div>
-
-                <div className="wrapper style2">
-                    <article className="container special">
-                        <header>
-                            <h2>最新电影</h2>
-                            <span className="byline">
-                                点击图片查看<strong>最新影评</strong>及该电影<strong>整体风评</strong>
-                            </span>
-                        </header>
-                    </article>
-                    <div className="carousel">
-                        <div className="reel">
-                            {this.renderMovieAbastract(1)}
-                            {this.renderMovieAbastract(2)}
-                            {this.renderMovieAbastract(3)}
-                            {this.renderMovieAbastract(4)}
-                            {this.renderMovieAbastract(5)}
-                            {this.renderMovieAbastract(6)}
-                            {this.renderMovieAbastract(7)}
-                            {this.renderMovieAbastract(8)}
-                            {this.renderMovieAbastract(9)}
-                            {this.renderMovieAbastract(10)}
-                        </div>
-                    </div>
-                    <hr/>
-                </div>
+                <MovieInTheater/>
 
                 <div className="wrapper">
                     <section

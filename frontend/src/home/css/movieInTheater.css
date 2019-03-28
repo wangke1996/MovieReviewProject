@@ -1,0 +1,13 @@
+.scrollReel {
+    height: 550px;
+}
+
+.scrollReel article {
+    margin: 0 2em;
+}
+
+.scrollReel .image img {
+    width: 270px;
+    height: 400px;
+    margin: 0 auto;
+}

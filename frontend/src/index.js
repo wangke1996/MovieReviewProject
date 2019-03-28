@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import CommonTemplate from './common/js/common'
+import CommonTemplate from './common/js/commonTemplate'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

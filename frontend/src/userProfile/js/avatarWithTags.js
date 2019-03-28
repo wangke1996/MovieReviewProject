@@ -1,20 +1,40 @@
 import React, {Component} from 'react';
-import {Avatar, Tag} from 'antd';
+import {Avatar, Tag, Affix} from 'antd';
 
 class AvatarWithTags extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {height: 0};
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    }
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions() {
+        this.setState({height: window.innerHeight});
+    }
+
     render() {
         return (
-            <div>
-                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" size="large"/>
-                <div>
-                    <Tag color="magenta">电影达人</Tag>
-                    <Tag color="red">剧情控</Tag>
-                    <Tag color="volcano">斯皮尔伯格</Tag>
-                    <Tag color="orange">真的很严格</Tag>
-                    <Tag color="gold">怀旧</Tag>
-                    <Tag color="lime">科幻迷</Tag>
-                    <Tag color="green">玛丽莲梦露</Tag>
-                </div>
+            <div className="align-center">
+                <Affix offsetTop={this.state.height / 2}>
+                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" size="large"/>
+                    <div>
+                        <Tag color="magenta"><a href={"#totalNum"} className="scrolly">电影达人</a></Tag>
+                        <Tag color="red"><a href={"#reviewList"} className="scrolly">剧情控</a></Tag>
+                        <Tag color="volcano"><a href={"#rateDistribution"} className="scrolly">真的很严格</a></Tag>
+                        <Tag color="orange"><a href={"#ageDistribution"} className="scrolly">怀旧</a></Tag>
+                        <Tag color="gold"><a href={"#favoriteType"} className="scrolly">科幻迷</a></Tag>
+                        <Tag color="lime"><a href={"#favoriteActor"} className="scrolly">玛丽莲梦露</a></Tag>
+                    </div>
+                </Affix>
             </div>
         )
     }

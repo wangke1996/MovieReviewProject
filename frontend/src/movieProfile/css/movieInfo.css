@@ -1,0 +1,11 @@
+.summary {
+    font-size: 1.4em;
+}
+
+.summary p {
+    text-indent: 2em;
+}
+
+.hotComments .usefulCount {
+    padding-right: 20px;
+}

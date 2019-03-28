@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom"
 import Home from '../../home/js/home'
-import '../css/common.css'
+import '../css/commonTemplate.css'
 import UserProfile from '../../userProfile/js/userProfile'
+import MovieProfile from '../../movieProfile/js/movieProfile'
 
 class CommonHeader extends Component {
     render() {
@@ -88,11 +89,19 @@ class CommonTemplate extends Component {
                     <CommonHeader/>
                     <Route exact path="/" component={Home}/>
                     <Route path="/userProfile" component={UserProfile}/>
+                    <Route path="/movieProfile/:movieID" component={GetMovieProfile}/>
                     <CommonFooter/>
                 </div>
             </Router>
         );
     }
+}
+
+function GetMovieProfile({match}) {
+    console.log('match!');
+    return (
+        <MovieProfile movieID={match.params.movieID}/>
+    );
 }
 
 export default CommonTemplate

@@ -2,34 +2,35 @@ import React, {Component} from 'react';
 import {Rate} from 'antd';
 
 class MovieAbstract extends Component {
-    constructor(props) {
-        super(props);
-    }
-
 
 
     render() {
-        let prefix = process.env.PUBLIC_URL;
         return (
-                <article>
-                    <a href={this.props.Hyperlink}
-                       className="image featured"><img
-                        src={prefix + this.props.Sourcelink} alt=""/></a>
-                    <Rate allowHalf defaultValue={this.props.Star}/>
-                    <header>
-                        <h3><a href={this.props.Hyperlink}>{this.props.Title}</a></h3>
-                    </header>
-                    <p>{this.props.Paragraph}</p>
-                </article>
+            <article>
+                <a href={this.props.Hyperlink} className="image featured">
+                    <img src={this.props.ImageSrc} alt=""/>
+                </a>
+                <Rate disabled allowHalf defaultValue={this.props.Star}/>
+                <h3><a href={this.props.Hyperlink}>{this.props.Title}</a></h3>
+                <div className='row'>
+                    <div className='6u'>
+                        {this.props.Genres}
+                    </div>
+                    <div className='6u'>
+                        {this.props.Pubdate}
+                    </div>
+                </div>
+            </article>
         )
     }
 }
 
 MovieAbstract.defualtProps = {
     Hyperlink: "#",
-    Sourcelink: "/webTemplate/images/pic01.jpg",
+    ImageSrc: "/webTemplate/images/pic01.jpg",
     Star: 4,
-    Titile: "Movie Name",
-    Paragraph: "Description for this Movie"
+    Title: "Movie Name",
+    Genres: "动作 | 剧情",
+    Pubdate: "2019-01-15"
 };
 export default MovieAbstract

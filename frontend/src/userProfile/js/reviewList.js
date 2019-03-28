@@ -23,19 +23,25 @@ class SingleComment extends Component {
 }
 
 class ReviewList extends Component {
+    constructor(props) {
+        super(props);
+        this.props.flag = "";
+    }
+
     render() {
+        let avatar_src = process.env.PUBLIC_URL + "/source/images/avatar/SunWuKong.jpg";
         const data = [
             {
-                author: "欧拉王",
-                filmName: "西虹市首富",
-                rate: 2,
-                avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+                author: "六金莱",
+                filmName: "大梦西游",
+                rate: 1,
+                avatar: avatar_src,
                 content: (
-                    <p>……开心麻花片子的老问题，<span className="emphatic">剧情分裂</span>，建立一个设定猛耍宝……</p>
+                    <p>……是非颠倒，人妖不分，<span className="emphatic">剧情混乱</span>……</p>
                 ),
                 fullContent: (
-                    <p>开心麻花片子的老问题，<span className="emphatic">剧情分裂</span>，建立一个设定猛耍宝，很多耍宝很
-                        low很常用，没有新意。为了好玩好笑，剧情发展差点也无所谓了。连情节中最基本的时间概念也没考虑使用，做做文章。</p>
+                    <p>现在改编的这些电影，完全不尊重原著，是非颠倒，人妖不分，<span className="emphatic">剧情混乱</span>，居然还有孙悟空和白骨精谈恋爱的情节，以至于总有小朋友问我：“六爷爷，孙悟空到底有几个女朋友啊？”
+                    </p>
                 ),
                 datetime: (
                     <Tooltip title={moment().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss')}>
@@ -44,17 +50,16 @@ class ReviewList extends Component {
                 ),
             },
             {
-                author: "欧拉王",
-                filmName: '爱情公寓',
+                author: "六金莱",
+                filmName: '七龙珠',
                 rate: 1,
-                avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+                avatar: avatar_src,
                 content: (
-                    <p>……突然煽情，<span className="emphatic">剧情发展牵强</span>。特效不好看但是感觉挺费钱的……</p>
+                    <p>……<span className="emphatic">剧情发展牵强</span>，孙悟空都弄得髭毛乍鬼的……</p>
                 ),
                 fullContent: (
                     <p>
-                        张起灵为了激活铠甲留了一桶血晕了过去，不过马上又复活了，陈美嘉问张起灵为什么又满血复活了，张起灵说了一句让我怀疑人生话:谢谢你的乌鸡白凤丸。我真是r你马了！就当你为了搞笑故意为之吧。但是也太扯了。突然煽情，<span
-                        className="emphatic">剧情发展牵强</span>。特效不好看但是感觉挺费钱的，花那么多钱拍个这种垃圾电影。我在看电影之前是反感王传君的，觉得也是多年好朋友，也是自己事业的起点，怎么样都不应该抛弃。现在我明白王传君“演员要有羞耻心”这句话的意思了。领教了。
+                        我们不要一味跟着某一些国家后面去追他们的那种风格，什么《七龙珠》，<span className="emphatic">剧情发展牵强</span>，孙悟空都弄得髭毛乍鬼的，这个不是我们民族的东西！
                     </p>
                 ),
                 datetime: (
@@ -63,25 +68,50 @@ class ReviewList extends Component {
                     </Tooltip>
                 ),
             },
+            {
+                author: "六金莱",
+                filmName: '西游记女儿国',
+                rate: 1,
+                avatar: avatar_src,
+                content: (
+                    <p>……<span className="emphatic">剧情太烂了</span>！戏说不是胡说……</p>
+                ),
+                fullContent: (
+                    <p>
+                        <span className="emphatic">剧情太烂了</span>！戏说不是胡说，改编不是乱编，你们这样是要向全国人民谢罪的！
+                    </p>
+                ),
+                datetime: (
+                    <Tooltip title={moment().subtract(6, 'seconds').format('YYYY-MM-DD HH:mm:ss')}>
+                        <span>{moment().subtract(6, 'seconds').fromNow()}</span>
+                    </Tooltip>
+                ),
+            },
         ];
         return (
-            <List
-                className="comment-list"
-                header={(<span className="byline"><strong>`部分相关评论`</strong></span>)}
-                itemLayout="horizontal"
-                dataSource={data}
-                renderItem={item => (
-                    <SingleComment
-                        author={item.author}
-                        filmName={item.filmName}
-                        rate={item.rate}
-                        avatar={item.avatar}
-                        content={item.content}
-                        fullContent={item.fullContent}
-                        datetime={item.datetime}
-                    />
-                )}
-            />
+            <div className={"6u " + this.props.flag} id="reviewList">
+                <header>
+                    <h2>对<span className="emphatic">剧情</span>最为挑剔</h2>
+                    <span className="byline">对电影{"剧情"}的评价中，负面评价多达<span className="emphatic">80%</span></span>
+                </header>
+                <List
+                    className="comment-list"
+                    header={(<span className="byline"><strong>`部分相关评论`</strong></span>)}
+                    itemLayout="horizontal"
+                    dataSource={data}
+                    renderItem={item => (
+                        <SingleComment
+                            author={item.author}
+                            filmName={item.filmName}
+                            rate={item.rate}
+                            avatar={item.avatar}
+                            content={item.content}
+                            fullContent={item.fullContent}
+                            datetime={item.datetime}
+                        />
+                    )}
+                />
+            </div>
         )
     }
 }

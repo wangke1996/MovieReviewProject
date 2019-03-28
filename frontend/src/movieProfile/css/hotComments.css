@@ -1,0 +1,8 @@
+.usefulCount {
+    padding-right: 20px;
+}
+
+.usefulCount .number {
+    padding-left: 8px;
+    cursor: auto;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="93pytorch" createEmptyFolders="true" autoUploadExternalChanges="true">
+    <serverData>
+      <paths name="93pytorch">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/wangke/MovieProject" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath path="/home/wangke/MovieProject/frontend/node_modules" />
+            <excludedPath path="/home/wangke/MovieProject/frontend/build" />
+            <excludedPath path="/home/wangke/MovieProject/frontend/package.json" />
+            <excludedPath path="/home/wangke/MovieProject/frontend/package-lock.json" />
+            <excludedPath path="/home/wangke/MovieProject/backend/static/static" />
+            <excludedPath path="/home/wangke/MovieProject/backend/static/precache-manifest.fc8f7986fefeaca4b8b73959d33336b0.js" />
+            <excludedPath local="true" path="$PROJECT_DIR$/MovieData" />
+            <excludedPath path="/home/wangke/MovieProject/backend/static" />
+            <excludedPath path="/home/wangke/MovieProject/backend/__pycache__" />
+            <excludedPath path="/home/wangke/MovieProject/backend/crawler/__pycache__" />
+            <excludedPath path="/home/wangke/MovieProject/backend/main/__pycache__" />
+            <excludedPath path="/home/wangke/MovieProject/frontend/package.json1" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
