@@ -3,6 +3,8 @@ from backend.config import config
 from backend.functionLib.function_lib import load_json_file, save_json_file, cache_available
 import os
 
+max_review_count = 10000
+
 
 class DataAnalyzer:
     def __init__(self):
@@ -16,7 +18,7 @@ class DataAnalyzer:
         if cache_available(json_file, update_interval=-1):
             results = load_json_file(json_file)
         else:
-            reviews = crawler.get_movie_reviews(movie_id, reviews_count=-1)
+            reviews = crawler.get_movie_reviews(movie_id, reviews_count=max_review_count)
             results = {}
             for review in reviews:
                 create_time = review["created_at"].split()[0]
