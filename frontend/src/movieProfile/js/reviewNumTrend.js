@@ -5,11 +5,12 @@ import DataSet from "@antv/data-set";
 import Brush from "@antv/g2-brush";
 import {getMovieReviewsTrend} from "../../libs/getJsonData";
 import LoadingSpin from "../../common/js/loadingSpin";
+import ScoreTrend from './scoreTrend'
 
 function getComponent(data, pubDate) {
     const ds = new DataSet();
     const dv = ds
-        .createView("test")
+        .createView("reviewTrend")
         .source(data)
         .transform({
             type: "filter",
@@ -155,11 +156,16 @@ class ReviewNumTrend extends Component {
 
         return (
             <div>
-                <header>
-                    <h2>每日评论数量</h2>
-                    <span className="byline">累计评论<span className="emphatic">{totalReviewNum()}</span>条</span>
-                </header>
-                <SliderChart/>
+                <div className='6u'>
+                    <header>
+                        <h2>每日评论数量</h2>
+                        <span className="byline">累计评论<span className="emphatic">{totalReviewNum()}</span>条</span>
+                    </header>
+                    <SliderChart/>
+                </div>
+                <div className='6u'>
+                    <ScoreTrend reviewsTrendData={data} pubDate={this.props.pubDate}/>
+                </div>
             </div>
         );
     }

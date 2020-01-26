@@ -98,7 +98,6 @@ class CommonTemplate extends Component {
 }
 
 function GetMovieProfile({match}) {
-    console.log('match!');
     return (
         <MovieProfile movieID={match.params.movieID}/>
     );

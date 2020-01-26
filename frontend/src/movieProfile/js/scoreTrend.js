@@ -1,147 +1,147 @@
 import React, {Component} from "react";
 import {Chart, Geom, Axis, Tooltip, Legend, Label} from "bizcharts";
 import moment from 'moment'
+import DataSet from "@antv/data-set";
+import Brush from "@antv/g2-brush";
 
-class ScoreTrend extends Component {
+function getComponent(data, pubDate) {
+    const ds = new DataSet();
+    const dv = ds.createView("reviewTrend").source(data).transform({
+        type: "filter", callback(row) {
+            let pubYear, pubMonth, pubDay;
+            [pubYear, pubMonth, pubDay] = pubDate.split('-');
+            let startDay = [(parseInt(pubYear) - 1).toString(), pubMonth, pubDay].join('-');
+            return row.日期 > startDay;/*row.num > 2;*/
+        }
+    }).transform({type: "fold", key: "scoreType", value: "评分", fields: ["当日评分", "累计评分"]});
+    const scale = {
+        日期: {
+            type: "time",
+        },
+        评分: {
+            min: 0,
+            max: 10,
+            tickInterval: 1
+        }
+    };
+    let chart;
 
-    render() {
-        function random_data() {
-            let year = 2019, month = 2, startDay = 5, endDay = 28;
-            let endTime = moment().format('YYYY-MM-DD');
-            let nowMonth = parseInt(endTime.slice(5, 7));
-            let nowDay = parseInt(endTime.slice(8, 10));
-            if (nowMonth == month && nowDay < endDay)
-                endDay = nowDay;
-            let data = [
-                {
-                    name: '累计评分',
+    class RenderChart extends React.Component {
+        componentDidMount() {
+            new Brush({
+                canvas: chart.get("canvas"),
+                style: {
+                    fill: "#ccc",
+                    fillOpacity: 0.4
                 },
-                {
-                    name: '当日评分',
-                }
-            ];
-            let i = 0;
-            let day;
-            let averageScore = 0;
-            for (day = startDay; day <= endDay; day++, i++) {
-                let time = year + '-' + ('00' + month).slice(-2) + ('00' + day).slice(-2);
-                let score = Math.round(100 * (Math.random() * 3 + 6)) / 100;
-                averageScore += score;
-                // let average_score = Math.round(100*(Math.random() * 5))/100;
-                data[i] = {'日期': time, '当日评分': score, '累计评分': Math.round(100 * averageScore / (i + 1)) / 100};
-            }
-            return data;
+                chart
+            });
+            chart.on("plotdblclick", () => {
+                chart.get("options").filters = {};
+                chart.repaint();
+            });
         }
 
-        const data = random_data();
-        const scale = {
-            当日评分: {
-                min: 0,
-                max: 10
+        render() {
+            return (
+                <div>
+                    <Chart
+                        height={400}
+                        data={dv}
+                        // padding={[60, 30, 30]}
+                        scale={scale}
+                        onGetG2Instance={g2Chart => {
+                            g2Chart.animate(false);
+                            chart = g2Chart;
+                        }}
+                        forceFit
+                    >
+                        <Tooltip/>
+                        <Axis/>
+                        <Legend position="top"/>
+                        <Geom
+                            type="line"
+                            position="日期*评分"
+                            color="scoreType"
+                            shape={['scoreType', d => {
+                                return d === '当日评分' ? 'hv' : 'spline';
+                            }]}
+                            size={2}
+                        />
+                    </Chart>
+                </div>
+            );
+        }
+    }
+
+    return RenderChart;
+}
+
+class ScoreTrend extends Component {
+    dataPreprocess() {
+        let data = [];
+        let reviewNum = 0;
+        let totalScore = 0;
+        this.props.reviewsTrendData.forEach((d, i) => {
+            reviewNum += d.num;
+            totalScore += d.num * d.rate * 2;
+            data[i] = {
+                '日期': d.time,
+                '当日评分': Math.round(2 * d.rate * 100) / 100,
+                '累计评分': Math.round(totalScore / reviewNum * 100) / 100,
+                '评论数': d.num
+            };
+        });
+        return data;
+    }
+
+    random_data() {
+        let year = 2019, month = 2, startDay = 5, endDay = 28;
+        let endTime = moment().format('YYYY-MM-DD');
+        let nowMonth = parseInt(endTime.slice(5, 7));
+        let nowDay = parseInt(endTime.slice(8, 10));
+        if (nowMonth == month && nowDay < endDay)
+            endDay = nowDay;
+        let data = [
+            {
+                name: '累计评分',
             },
-            累计评分: {
-                min: 0,
-                max: 10
+            {
+                name: '当日评分',
             }
-        };
-        let chartIns = null;
+        ];
+        let i = 0;
+        let day;
+        let averageScore = 0;
+        for (day = startDay; day <= endDay; day++, i++) {
+            let time = year + '-' + ('00' + month).slice(-2) + ('00' + day).slice(-2);
+            let score = Math.round(100 * (Math.random() * 3 + 6)) / 100;
+            averageScore += score;
+            // let average_score = Math.round(100*(Math.random() * 5))/100;
+            data[i] = {'日期': time, '当日评分': score, '累计评分': Math.round(100 * averageScore / (i + 1)) / 100};
+        }
+        return data;
+    }
+
+    render() {
+        const data = this.dataPreprocess();
+        const RenderChart = getComponent(data, this.props.pubDate);
+        // const data = this.random_data();
         return (
-            <div className="6u" id="scoreTrend">
+            <div id='scoreTrend'>
                 <header>
                     <h2>评分变化趋势</h2>
                     <span className="byline">总体评分<span
                         className="emphatic">{data[data.length - 1]['累计评分']}</span>/10</span>
                 </header>
-                <Chart
-                    height={400}
-                    scale={scale}
-                    forceFit
-                    data={data}
-                    onGetG2Instance={chart => {
-                        chartIns = chart;
-                    }}
-                >
-
-                    <Legend custom={true} attachLast={true}
-                            allowAllCanceled={true}
-                            items={[
-                                {
-                                    value: "当日评分",
-                                    marker: {
-                                        symbol: "hyphen",
-                                        stroke: "#3182bd",
-                                    }
-                                },
-                                {
-                                    value: "累计评分",
-                                    marker: {
-                                        symbol: "circle",
-                                        fill: "#fdae6b",
-                                    }
-                                }
-                            ]}
-                            onClick={ev => {
-                                const item = ev.item;
-                                const value = item.value;
-                                const checked = ev.checked;
-                                const geoms = chartIns.getAllGeoms();
-
-                                for (let i = 0; i < geoms.length; i++) {
-                                    const geom = geoms[i];
-
-                                    if (geom.getYScale().field === value) {
-                                        if (checked) {
-                                            geom.show();
-                                        } else {
-                                            geom.hide();
-                                        }
-                                    }
-                                }
-                            }}
-                    />
-                    <Axis name="日期"/>
-                    <Axis
-                        name="累计评分"
-                        grid={null}
-                        label={{
-                            textStyle: {
-                                fill: "#fdae6b"
-                            }
-                        }}
-                    />
-                    <Tooltip/>
-                    <Geom type='line' position="日期*当日评分" color="#3182bd" style={{
-                        lineDash: [4, 4]
-                    }} size={1} shape="hv"/>
-                    <Geom
-                        type="line"
-                        position="日期*累计评分"
-                        color="#fdae6b"
-                        size={3}
-                        shape={"smooth"}
-                    >
-
-                        <Label content="累计评分" offset={5}
-                               textStyle={{
-                                   textAlign: 'center', // 文本对齐方向，可取值为： start middle end
-                                   fill: '#fdae6b', // 文本的颜色
-                                   fontSize: '1em', // 文本大小
-                                   fontWeight: 'bold', // 文本粗细
-                                   textBaseline: 'bottom' // 文本基准线，可取 top middle bottom，默认为middle
-                               }}/>
-                    </Geom>
-                    <Geom
-                        type="point"
-                        position="日期*累计评分"
-                        color="#fdae6b"
-                        size={5}
-                        shape={"circle"}
-                    />
-                </Chart>
+                <RenderChart/>
             </div>
         );
     }
 }
 
-
+ScoreTrend.defaultProps = {
+    pubDate: '1900-01-01',
+    reviewsTrendData: []
+};
 export default ScoreTrend;

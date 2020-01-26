@@ -73,8 +73,11 @@ class BasicInfo extends Component {
                     <Geom type="interval" position="rate*num">
                         <Label content='num' offset={0} textStyle={
                             {
-                                textAlign: 'right',
-                                fill: '#ffae6b'
+                                textAlign:'left',
+                                fill:'#000',
+                                fontWeight:'bold'
+                                //textAlign: 'right',
+                                //fill: '#ffae6b'
                             }
                         }
                                formatter={(text, item, index) => (100 * item.point['percent']).toFixed(2) + '%'}
