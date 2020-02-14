@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {getMovieComments} from '../../libs/getJsonData'
-import {Comment, Icon, List, Rate, Tabs, Tooltip} from "antd";
+import {Comment, Icon, List, Rate, Tabs, Tooltip, Button} from "antd";
 import moment from "moment";
 import {image_url} from "../../libs/toolFunctions";
 import '../css/hotComments.css'
@@ -25,7 +25,7 @@ class SingleComment extends Component {
             </span>];
         const longComment = this.props.content !== this.props.fullContent;
         if (longComment)
-            actions.push(<a onClick={this.action}>{full ? "简略信息" : "查看全文"}</a>);
+            actions.push(<Button type='link' onClick={this.action}>{full ? "简略信息" : "查看全文"}</Button>);
         const content = full || !longComment ? this.props.fullContent : this.props.content + '……';
         const info = <span>作者：{this.props.author} | 打分：<Rate disabled defaultValue={this.props.rate}/></span>;
         return (

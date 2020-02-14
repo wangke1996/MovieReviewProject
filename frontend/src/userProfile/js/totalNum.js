@@ -3,14 +3,9 @@ import ReactSpeedometer from "react-d3-speedometer";
 import CountUp from 'react-countup';
 
 class TotalNum extends Component {
-    constructor(props) {
-        super(props);
-        this.props.flag = "";
-    }
-
     render() {
         return (
-            <div className={"6u "+this.props.flag} id="totalNum">
+            <div className={"6u " + this.props.flag} id="totalNum">
                 <header name={this.props.flag.toString()}>
                     <h2>看过<span className="emphatic">
                                 <CountUp
@@ -43,4 +38,8 @@ class TotalNum extends Component {
         )
     }
 }
+
+TotalNum.defaultProps = {
+    flag: "",
+};
 export default TotalNum

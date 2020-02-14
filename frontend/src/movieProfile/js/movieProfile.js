@@ -10,6 +10,7 @@ import HotComments from './hotComments'
 import BasicInfo from './basicInfo'
 import Stills from './stills'
 import LoadingSpin from '../../common/js/loadingSpin'
+import {SentimentProfile} from "./sentimentProfile";
 
 class MovieProfile extends Component {
     loadData(movieID) {
@@ -19,31 +20,28 @@ class MovieProfile extends Component {
             return state;
         });
         getMovieInfo(movieID, (data) => {
-            this.setState((state) => {
-                state.movieID = movieID;
-                state.data = data;
-                state.loadedFlag = true;
-                return state;
-            })
+            this.setState({movieID,data,loadedFlag:true})
         });
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            movieID: '-1',
-            data: {},
-            loadedFlag: false,
-            useDefault: false
-        };
+    state = {
+        movieID: '-1',
+        data: {},
+        loadedFlag: false,
+        useDefault: false
+    };
+
+    componentDidMount() {
         this.loadData(this.props.movieID);
     }
 
     render() {
-        if (!this.state.loadedFlag)
+        console.log(this.state);
+        const {loadedFlag,data,movieID,useDefault}=this.state;
+        if (!loadedFlag)
         // render nothing before data loaded
             return (<LoadingSpin/>);
-        if (isEmpty(this.state.data)) {
+        if (isEmpty(data)) {
             // data loaded, but is empty, request for default data
             this.setState((state) => {
                 state.useDefault = true;
@@ -52,8 +50,8 @@ class MovieProfile extends Component {
             this.loadData(this.props.defaultMovieID);
             return (<LoadingSpin/>)
         }
-        if (this.state.useDefault) {
-            message.info('无法找到指定电影的相关信息，已为您显示最近热门电影“' + this.state.data['title'] + '”', 10);
+        if (useDefault) {
+            message.info('无法找到指定电影的相关信息，已为您显示最近热门电影“' + data['title'] + '”', 10);
         }
         return (
             <div id="Content" className="MovieProfile">
@@ -69,18 +67,18 @@ class MovieProfile extends Component {
                         <div className='row'>
                             <div className='8u'>
                                 <div id='summary'>
-                                    <Summary data={this.state.data}/>
+                                    <Summary data={data}/>
                                 </div>
                                 <div id='hotComments'>
-                                    <HotComments movieID={this.state.movieID}/>
+                                    <HotComments movieID={movieID}/>
                                 </div>
                             </div>
                             <div className='4u'>
                                 <div id='basicInfo'>
-                                    <BasicInfo data={this.state.data}/>
+                                    <BasicInfo data={data}/>
                                 </div>
                                 <div id='stills'>
-                                    <Stills movieID={this.state.movieID}/>
+                                    <Stills movieID={movieID}/>
                                 </div>
                             </div>
                         </div>
@@ -88,10 +86,15 @@ class MovieProfile extends Component {
                 </div>
                 <div className="wrapper style1 align-center">
                     <div className="row">
-                        <ReviewNumTrend movieID={this.state.movieID} pubDate={this.state.data['pubdate']}/>
+                        <ReviewNumTrend movieID={movieID} pubDate={data['pubdate']||data['pubdates']}/>
                         {/*<ScoreTrend/>*/}
                     </div>
                 </div>
+                {/*<div className="wrapper style1 align-center">*/}
+                {/*    <div className="row">*/}
+                <SentimentProfile movieID={movieID}/>
+                {/*</div>*/}
+                {/*</div>*/}
             </div>
 
         )

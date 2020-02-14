@@ -3,15 +3,16 @@
  */
 import reqwest from 'reqwest';
 
-function fetchData(url, callback) {
+const backendURL = 'http://101.6.69.26:5002';
+
+function fetchData(url, callback, data = {}) {
     reqwest({
-        url: url,
+        url: backendURL + url,
         type: 'json',
         method: 'get',
         contentType: 'application/json',
-        success: (res) => {
-            callback(res);
-        },
+        data: data,
+        success: callback,
     });
 }
 
@@ -26,21 +27,51 @@ export function getMovieInfo(movieID, callback) {
 }
 
 export function getMovieReviews(movieID, callback, count = 100) {
-    let url = '/getMovieReviews/' + movieID + '/' + count;
+    const url = '/getMovieReviews/' + movieID + '/' + count;
     fetchData(url, callback);
 }
 
 export function getMovieComments(movieID, callback, count = 100) {
-    let url = '/getMovieComments/' + movieID + '/' + count;
+    const url = '/getMovieComments/' + movieID + '/' + count;
     fetchData(url, callback);
 }
 
 export function getMoviePhotos(movieID, callback, count = 100) {
-    let url = '/getMoviePhotos/' + movieID + '/' + count;
+    const url = '/getMoviePhotos/' + movieID + '/' + count;
     fetchData(url, callback);
 }
 
 export function getMovieReviewsTrend(movieID, callback) {
-    let url = '/getMovieReviewsTrend/' + movieID;
+    const url = '/getMovieReviewsTrend/' + movieID;
+    fetchData(url, callback);
+}
+
+export function getTargetFreqs(movieID, target, callback) {
+    const url = '/getTargetFreqs/' + movieID + '/' + target;
+    console.log(url);
+    fetchData(url, callback);
+}
+
+export function getRelatedSentences(query, callback) {
+    const url = '/getRelatedSentences';
+    fetchData(url, callback, query)
+}
+
+export function getTargetList(query, callback) {
+    const url = '/getTargetList';
+    fetchData(url, callback, query);
+}
+
+export function getTargetDetail(query, callback) {
+    const url = '/getTargetDetail';
+    fetchData(url, callback, query);
+}
+
+export function searchTarget(movieID, input_value, callback) {
+    if (!input_value) {
+        callback([]);
+        return;
+    }
+    const url = '/searchTarget/' + movieID + '/' + input_value;
     fetchData(url, callback);
 }

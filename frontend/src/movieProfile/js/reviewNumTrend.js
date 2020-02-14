@@ -9,6 +9,7 @@ import ScoreTrend from './scoreTrend'
 
 function getComponent(data, pubDate) {
     const ds = new DataSet();
+
     const dv = ds
         .createView("reviewTrend")
         .source(data)
@@ -119,8 +120,19 @@ function getComponent(data, pubDate) {
 
     return SliderChart;
 }
-
+function getLastPubDate(pubDate){
+    let lastPubDate=pubDate;
+    if (typeof (pubDate) !== 'string') {
+        const pubDates = pubDate.map(s => s.match(/\d+-\d+-\d+/g)[0]);
+        lastPubDate = pubDates.sort(((a, b) => b.split('-').join('') - a.split('-').join('')))[0];
+    }
+    return lastPubDate;
+}
 class ReviewNumTrend extends Component {
+    state = {
+        reviewsTrendData: [],
+        loadedFlag: false,
+    };
 
     loadData(movieID) {
         getMovieReviewsTrend(movieID, (data) => {
@@ -131,24 +143,22 @@ class ReviewNumTrend extends Component {
         });
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            reviewsTrendData: [],
-            loadedFlag: false,
-        };
+    componentDidMount() {
         this.loadData(this.props.movieID);
     }
 
     render() {
-        if (!this.state.loadedFlag)
+        console.log(this.state);
+        console.log(this.props);
+        const {pubDate}=this.props;
+        const {loadedFlag,reviewsTrendData}=this.state;
+        const lastPubDate=getLastPubDate(pubDate);
+        if (!loadedFlag)
             return (<LoadingSpin tip='数据在线爬取中，可能需要数分钟时间'/>);
-        const SliderChart = getComponent(this.state.reviewsTrendData, this.props.pubDate);
-        const data = this.state.reviewsTrendData;
-
+        const SliderChart = getComponent(reviewsTrendData, lastPubDate);
         function totalReviewNum() {
             let total = 0;
-            data.forEach(d => {
+            reviewsTrendData.forEach(d => {
                 total += d['num'];
             });
             return total;
@@ -164,7 +174,7 @@ class ReviewNumTrend extends Component {
                     <SliderChart/>
                 </div>
                 <div className='6u'>
-                    <ScoreTrend reviewsTrendData={data} pubDate={this.props.pubDate}/>
+                    <ScoreTrend reviewsTrendData={reviewsTrendData} pubDate={lastPubDate}/>
                 </div>
             </div>
         );

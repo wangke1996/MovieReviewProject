@@ -4,7 +4,7 @@ import {Axis, Chart, Coord, Geom, Label, Tooltip as BizTooltip} from "bizcharts"
 import {image_url} from "../../libs/toolFunctions";
 
 class PeopleAvatar extends Component {
-    renderPeople(data) {
+    renderPeople(data,key) {
         const {Meta} = Card;
         const content = (
             <Card hoverable cover={<img alt="" src={image_url(data['avatars']['small'])}/>}>
@@ -12,20 +12,20 @@ class PeopleAvatar extends Component {
             </Card>
         );
         return (
-            <Popover content={content}>
+            <Popover key={key} content={content}>
                 <a href={data['alt']}>{data['name']} </a>
             </Popover>
         )
     }
 
     render() {
-        const people = [];
-        let i;
-        for (i in this.props.datas)
-            people.push(this.renderPeople(this.props.datas[i]));
+        const {datas}=this.props;
+        // const people=datas.map(this.renderPeople);
+        // for (i in this.props.datas)
+        //     people.push(this.renderPeople(this.props.datas[i]));
         return (
             <span>
-            {people}
+                {datas.map(this.renderPeople)}
             </span>
         )
     }
@@ -91,7 +91,7 @@ class BasicInfo extends Component {
                     <p>主演：<PeopleAvatar datas={data['casts']}/></p>
                     <p>类型：{data['genres'].join('/')}</p>
                     <p>国家/地区：{data['countries'].join('/')}</p>
-                    <p>上映日期：{data['mainland_pubdate']}</p>
+                    <p>上映日期：{data['mainland_pubdate']||data['pubdates'].join('/')}</p>
                     <p>片长：{data['durations']}</p>
                     <p>别名：{data['aka'].join('/')}</p>
                 </div>

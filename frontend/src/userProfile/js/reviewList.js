@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Comment, Tooltip, List, Rate} from 'antd';
+import {Comment, Tooltip, List, Rate, Button} from 'antd';
 import moment from 'moment';
 
 class SingleComment extends Component {
@@ -10,7 +10,7 @@ class SingleComment extends Component {
 
     render() {
         const full = this.state.full;
-        const actions = [<a onClick={this.action}>{full ? "简略信息" : "查看全文"}</a>];
+        const actions = [<Button type='link' onClick={this.action}>{full ? "简略信息" : "查看全文"}</Button>];
         const content = full ? this.props.fullContent : this.props.content;
         const info = <span>作者：{this.props.author} | 影片：<strong>{this.props.filmName}</strong> | 打分：<Rate disabled
                                                                                                          defaultValue={this.props.rate}/></span>;
@@ -23,11 +23,6 @@ class SingleComment extends Component {
 }
 
 class ReviewList extends Component {
-    constructor(props) {
-        super(props);
-        this.props.flag = "";
-    }
-
     render() {
         let avatar_src = process.env.PUBLIC_URL + "/source/images/avatar/SunWuKong.jpg";
         const data = [
@@ -116,4 +111,5 @@ class ReviewList extends Component {
     }
 }
 
+ReviewList.defaultProps = {flag: ""};
 export default ReviewList

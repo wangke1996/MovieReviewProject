@@ -361,7 +361,7 @@ class MovieInfo extends Component {
                                     <p>主演：<PeopleAvatar datas={data['casts']}/></p>
                                     <p>类型：{data['genres'].join('/')}</p>
                                     <p>国家/地区：{data['countries'].join('/')}</p>
-                                    <p>上映日期：{data['mainland_pubdate']}</p>
+                                    <p>上映日期：{data['mainland_pubdate']||data['pubdates'].join('/')}</p>
                                     <p>片长：{data['durations']}</p>
                                     <p>别名：{data['aka'].join('/')}</p>
                                 </div>

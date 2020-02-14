@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Chart, Geom, Axis, Tooltip, Legend, Label} from "bizcharts";
+import {Chart, Geom, Axis, Tooltip, Legend} from "bizcharts";
 import moment from 'moment'
 import DataSet from "@antv/data-set";
 import Brush from "@antv/g2-brush";
@@ -100,7 +100,7 @@ class ScoreTrend extends Component {
         let endTime = moment().format('YYYY-MM-DD');
         let nowMonth = parseInt(endTime.slice(5, 7));
         let nowDay = parseInt(endTime.slice(8, 10));
-        if (nowMonth == month && nowDay < endDay)
+        if (nowMonth === month && nowDay < endDay)
             endDay = nowDay;
         let data = [
             {

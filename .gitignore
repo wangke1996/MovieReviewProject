@@ -5,5 +5,8 @@ frontend/package-lock.json
 */__pycache__/
 backend/static/
 backend/templates/
+backend/sentiment/data
+backend/sentiment/model
 *.pyc
 .idea/
+logs/

@@ -5,11 +5,6 @@ import {Rate} from 'antd';
 import CountUp from 'react-countup';
 
 class RateDistribution extends Component {
-    constructor(props) {
-        super(props);
-        this.props.flag = "";
-    }
-
     render() {
         const data = [
             {
@@ -44,7 +39,7 @@ class RateDistribution extends Component {
             //}
         });
         return (
-            <div className={"6u "+this.props.flag}  id="rateDistribution">
+            <div className={"6u " + this.props.flag} id="rateDistribution">
                 <header>
                     <h2>平均给分 <Rate disabled allowHalf defaultValue={5 * 6 / 10}/><span
                         className="emphatic"><CountUp
@@ -76,4 +71,5 @@ class RateDistribution extends Component {
     }
 }
 
+RateDistribution.defaultProps = {flag: ""};
 export default RateDistribution

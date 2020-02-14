@@ -6,7 +6,7 @@ import {getMoviePhotos} from "../../libs/getJsonData";
 class CarouselImage extends Component {
     render() {
         const images = [];
-        this.props.datas.forEach(d => images.push(<img alt="" src={image_url(d)}/>));
+        this.props.datas.forEach((d, i) => images.push(<img key={i} alt="" src={image_url(d)}/>));
         return (
             <Carousel effect='fade' autoplay>
                 {images}
@@ -36,8 +36,8 @@ class PhotoGrid extends Component {
                 <List
                     grid={{gutter: 10, column: 2}}
                     dataSource={data.slice(0, 2)}
-                    renderItem={item => (
-                        <List.Item>
+                    renderItem={(item, i) => (
+                        <List.Item key={i}>
                             <CarouselImage datas={item}/>
                         </List.Item>
                     )}

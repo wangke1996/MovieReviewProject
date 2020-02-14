@@ -36,7 +36,8 @@
 
 		// skelJS (probably don't need to change anything here unless you know what you're doing)
 			skelJS: {
-				prefix:'/backend/static/build/webTemplate/css/style',
+				// prefix:'/backend/static/build/webTemplate/css/style',
+				prefix:'/webTemplate/css/style',
 				resetCSS: true,
 				boxModel: 'border',
 				grid: {

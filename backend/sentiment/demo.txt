@@ -1,0 +1,11 @@
+cd /d D:/SpyderWorkspace/KENN_demo
+
+python demo.py -s "外观 很 漂亮"
+python demo.py -s "外观 不 太 漂亮"
+python demo.py -s "高 规格 的 用料 和 精致 的 做工"
+python demo.py -s "炫酷 的 造型 、 充沛 的 动力 再 加上 本田 家族 运动 基因 的 传承"
+
+
+python demo.py -s "除了 简单 的 对话 外 没有 多 一点 的 声音"
+
+python demo.py -s " 但 这么 冷门 的 题材 ， 却 被 导演 拍 得 好笑 又 好看 。"

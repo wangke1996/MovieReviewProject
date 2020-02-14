@@ -1,6 +1,5 @@
-from flask import Flask, render_template, g, session
+from flask import Flask, render_template, session
 from flask_cors import CORS
-
 
 def creat_app():
     app = Flask(__name__, template_folder="templates", static_folder="static", static_url_path="/backend/static")

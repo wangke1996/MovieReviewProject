@@ -74,7 +74,7 @@ class DoubanCrawler:
             items = items[:require_count]
         return items
 
-    def get_movie_info(self, movie_id, update_interval=24):
+    def get_movie_info(self, movie_id, update_interval=-1):
         """
         爬取电影信息
         :param movie_id: 要爬取的电影id

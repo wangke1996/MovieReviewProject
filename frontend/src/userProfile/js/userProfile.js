@@ -8,11 +8,14 @@ import ActorCard from './actorCard'
 import TotalNum from './totalNum'
 import '../css/userProfile.css';
 
+const colors = ["magenta", "red", "volcano", "orange", "gold", "lime"];
+const tagJumpIds = ["totalNum", "rateDistribution", "favoriteType", "reviewList", "ageDistribution", "favoriteActor"];
+
 class UserProfile extends Component {
     constructor(props) {
         super(props);
-        props.colors = ["magenta", "red", "volcano", "orange", "gold", "lime"];
-        props.tagJumpIds = ["totalNum", "rateDistribution", "favoriteType", "reviewList", "ageDistribution", "favoriteActor"];
+        // props.colors = ["magenta", "red", "volcano", "orange", "gold", "lime"];
+        // props.tagJumpIds = ["totalNum", "rateDistribution", "favoriteType", "reviewList", "ageDistribution", "favoriteActor"];
         this.state = {
             // flagTotalNum: true,
             // flagRateDistribution: true,
@@ -47,9 +50,8 @@ class UserProfile extends Component {
 
     renderTags(i, text) {
         return (
-            <Tag color={this.props.colors[i]}><a href={"#" + this.props.tagJumpIds[i]}
-                                                 onClick={() => this.handleTagClick(i)}
-                                                 className="scrolly">{text}</a></Tag>
+            <Tag color={colors[i]}><a href={"#" + tagJumpIds[i]} onClick={() => this.handleTagClick(i)}
+                                      className="scrolly">{text}</a></Tag>
         )
     }
 
@@ -69,7 +71,7 @@ class UserProfile extends Component {
                     <section id="UserInfo">
                         <header>
                             <Affix offsetTop={this.state.height / 2}>
-                                <Avatar src={prefix+"/source/images/avatar/SunWuKong.jpg"}
+                                <Avatar src={prefix + "/source/images/avatar/SunWuKong.jpg"}
                                         size="large"/>
                                 <div>
                                     {this.renderTags(0, "电影达人")}

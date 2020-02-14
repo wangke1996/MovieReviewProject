@@ -1,8 +1,9 @@
 import time
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 import ssl
 
 ssl._create_default_https_context = ssl._create_unverified_context
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'}
 
 
 class CrawlerLimit:
@@ -23,7 +24,10 @@ class CrawlerLimit:
             time.sleep(sleep_time)
         self.last_request_time = now_time
         self.request_count = self.request_count + 1
-        return urlopen(url).read()
+        req = Request(url, headers=headers)
+        with urlopen(req) as response:
+            the_page = response.read()
+        return the_page
 
 
 limit = CrawlerLimit()

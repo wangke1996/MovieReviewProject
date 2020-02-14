@@ -9,7 +9,7 @@ class MovieTags extends Component {
         const tagElements = [];
         this.props.tags.forEach((d, i) => {
             let color = presetColors[i % presetColors.length];
-            tagElements.push(<Tag color={color}>{d}</Tag>);
+            tagElements.push(<Tag key={i} color={color}>{d}</Tag>);
         });
         return (
             <span className="MovieTags">

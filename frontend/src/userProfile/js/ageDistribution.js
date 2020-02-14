@@ -2,11 +2,6 @@ import React, {Component} from "react";
 import {Chart, Geom, Axis, Tooltip, Legend, Shape, Util} from "bizcharts";
 
 class AgeDistribution extends Component {
-    constructor(props) {
-        super(props);
-        this.props.flag = "";
-    }
-
     render() {
         function getRectPath(points) {
             const path = [];
@@ -126,7 +121,7 @@ class AgeDistribution extends Component {
         }
         return (
 
-            <div className={"6u "+this.props.flag}  id="ageDistribution">
+            <div className={"6u " + this.props.flag} id="ageDistribution">
                 <header>
                     <h2>是个<span className="emphatic">怀旧</span>的影迷</h2>
                     <span className="byline">看了<span className="emphatic">834</span>部上个世纪的电影</span>
@@ -194,4 +189,5 @@ class AgeDistribution extends Component {
     }
 }
 
+AgeDistribution.defaultProps = {flag: ''};
 export default AgeDistribution

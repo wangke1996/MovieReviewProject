@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import CommonTemplate from './common/js/commonTemplate'
 import * as serviceWorker from './serviceWorker';

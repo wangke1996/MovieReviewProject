@@ -1,0 +1,46 @@
+.center {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+.right{
+    float: right;
+}
+.margin-top {
+    margin-top: 20px;
+}
+
+.margin-bottom {
+    margin-bottom: 20px;
+}
+
+.margin-right {
+    margin-right: 20px;
+}
+
+.margin-left {
+    margin-left: 20px;
+}
+
+.padding-right {
+    padding-right: 20px;
+}
+
+.POS {
+    background-color: lime;
+}
+
+.NEU {
+    background-color: orange;
+}
+
+.NEG {
+    background-color: red;
+}
+
+#targetDetail span.ant-badge {
+    padding-right: 20px;
+}
+.tmp{
+    background:#c23531
+}
