@@ -10,3 +10,4 @@ backend/sentiment/model
 *.pyc
 .idea/
 logs/
+*.log

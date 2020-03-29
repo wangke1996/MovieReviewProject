@@ -1,5 +1,8 @@
 from backend.sentiment.sentiment_analysis import SentimentAnalysis
-from backend.functionLib.function_lib import concat_list
+from backend.functionLib.function_lib import concat_list, cut_sentences, split_sentences, read_lines, file_hash, \
+    load_json_file, save_json_file
+from backend.config import CONFIG
+import os
 
 
 class SentimentAnalyzer(object):
@@ -30,6 +33,24 @@ class SentimentAnalyzer(object):
                 result[target][sentiment][description] = []
             result[target][sentiment][description].append(sentence)
         return result
+
+    def analysis_reviews(self, review_list):
+        sentences = concat_list(map(lambda x: split_sentences(x), review_list))
+        cut_sentences_list = cut_sentences(sentences)
+        details = self.analysis_multi_sentences(cut_sentences_list)
+        return details
+
+    def analysis_uploaded_file(self, file_name):
+        file = os.path.join(CONFIG.upload_folder, file_name)
+        md5 = file_hash(file)
+        cache = md5.hexdigest()
+        cache_file = os.path.join(CONFIG.upload_analysis_cache_folder, cache + '.json')
+        if os.path.exists(cache_file):
+            return load_json_file(cache_file), cache
+        reviews = read_lines(file, lambda x: x.strip())
+        details = self.analysis_reviews(reviews)
+        save_json_file(cache_file, details)
+        return details, cache
 
 
 sentimentAnalyzer = SentimentAnalyzer()

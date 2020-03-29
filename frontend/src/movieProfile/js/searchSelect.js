@@ -32,7 +32,6 @@ export class SearchSelect extends Component {
 
     render() {
         const {fetching, data, value} = this.state;
-        console.log(this.state);
         // const {value} = this.props;
         return (
             <Select

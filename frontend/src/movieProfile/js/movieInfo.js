@@ -305,7 +305,6 @@ class MovieInfo extends Component {
         if (this.state.useDefault) {
             message.info('无法找到指定电影的相关信息，已为您显示最近热门电影“' + data['title'] + '”', 10);
         }
-        // console.log('render!', this.state);
         return (
             <div className="container">
                 <div className="row">

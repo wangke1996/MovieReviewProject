@@ -4,7 +4,6 @@ import {Collapse, Badge, Button, List, Skeleton, Divider, Row, Col, Radio, Typog
 import {
     getRelatedSentences,
     getTargetDetail,
-    getTargetFreqs,
     getTargetList,
     searchTarget
 } from "../../libs/getJsonData";
@@ -67,16 +66,9 @@ class ReviewList extends Component {
         loadedAll: false,
     };
     getData = () => {
-        const {movieID, target, sentiment, description} = this.props;
+        const {id, type, target, sentiment, description} = this.props;
         const {startIndex, count, data, list} = this.state;
-        const query = {
-            movieID: movieID,
-            target: target,
-            sentiment: sentiment,
-            description: description,
-            startIndex: startIndex,
-            count: count
-        };
+        const query = {id, type, target, sentiment, description, startIndex, count};
         this.setState({
             loading: true,
             list: list.concat([...new Array(count)].map(() => ({loading: true, text: ''}))),
@@ -158,7 +150,8 @@ class TargetSentimentTree extends Component {
         <Collapse accordion>
             {descriptionList.map(d =>
                 <Panel key={d.name} header={<Badge count={d.freq}>{d.name}</Badge>}>
-                    <ReviewList movieID={this.props.movieID} target={this.props.target} description={d.name}
+                    <ReviewList id={this.props.id} type={this.props.type} target={this.props.target}
+                                description={d.name}
                                 sentiment={sentiment}/>
                 </Panel>)}
         </Collapse>
@@ -201,8 +194,10 @@ class HotTarget extends Component {
         loaded: false,
     };
     getHotTarget = () => {
-        const {movieID, sortBy} = this.props;
-        const query = {movieID, sortBy};
+        const {id, type, sortBy} = this.props;
+        const query = {id, type, sortBy};
+        console.log('query');
+        console.log(query);
         getTargetList(query, data => this.setState({data, loaded: true}));
     };
 
@@ -211,7 +206,7 @@ class HotTarget extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.movieID !== this.props.movieID || prevProps.sortBy !== this.props.sortBy)
+        if (prevProps.id !== this.props.id || prevProps.type !== this.props.type || prevProps.sortBy !== this.props.sortBy)
             this.getHotTarget();
     }
 
@@ -246,19 +241,20 @@ class TargetDetail extends Component {
     };
     getData = () => {
         this.setState({loaded: false});
-        const {target, movieID} = this.props;
-        const query = {target, movieID};
+        const {target, id, type} = this.props;
+        const query = {target, id, type};
         getTargetDetail(query, this.setStateFromData);
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.movieID !== prevProps.movieID || this.props.target !== prevProps.target) {
+        const {target, id, type} = this.props;
+        if (id !== prevProps.id || type !== prevProps.type || target !== prevProps.target) {
             this.getData();
         }
     }
 
     render() {
-        const {movieID, target} = this.props;
+        const {id, type, target} = this.props;
         const {freqs, sentimentTree, descriptions, loaded} = this.state;
         if (!loaded || !target)
             return <LoadingSpin/>;
@@ -270,7 +266,7 @@ class TargetDetail extends Component {
                 </Col>
                 <Col span={8}>
                     <Title className='center' level={4}><Text mark>{target}</Text>相关描述及评论</Title>
-                    <TargetSentimentTree movieID={movieID} target={target} sentimentTree={sentimentTree}/>
+                    <TargetSentimentTree id={id} type={type} target={target} sentimentTree={sentimentTree}/>
                 </Col>
                 <Col span={8}>
                     <Title className='center' level={4}><Text mark>{target}</Text>相关描述词云</Title>
@@ -282,7 +278,11 @@ class TargetDetail extends Component {
 }
 
 class SearchTarget extends Component {
-    queryFunction = (value, callback) => searchTarget(this.props.movieID, value, callback);
+    queryFunction = (value, callback) => searchTarget({
+        id: this.props.id,
+        type: this.props.type,
+        input: value
+    }, callback);
     makeOptions = (targets) => targets.map(d => <Option key={d.name} value={d.name}><Text strong>{d.name}</Text><Text
         type='secondary' className='right'>{d.freq}条相关评价</Text></Option>);
 
@@ -308,7 +308,7 @@ export class SentimentProfile extends Component {
     };
 
     render() {
-        const {movieID} = this.props;
+        const {id, type} = this.props;
         const {sortBy, target} = this.state;
         return (
             <div>
@@ -318,9 +318,9 @@ export class SentimentProfile extends Component {
                     <Radio.Button value="POS">积极属性</Radio.Button>
                     <Radio.Button value="NEG">消极属性</Radio.Button>
                 </Radio.Group>
-                <HotTarget movieID={movieID} sortBy={sortBy} setTarget={this.setTarget.bind(this)}/>
-                <SearchTarget movieID={movieID} setTarget={this.setTarget.bind(this)}/>
-                <TargetDetail movieID={movieID} target={target} setTarget={this.setTarget.bind(this)}/>
+                <HotTarget id={id} type={type} sortBy={sortBy} setTarget={this.setTarget.bind(this)}/>
+                <SearchTarget id={id} type={type} setTarget={this.setTarget.bind(this)}/>
+                <TargetDetail id={id} type={type} target={target} setTarget={this.setTarget.bind(this)}/>
             </div>
         )
     }

@@ -20,7 +20,7 @@ class MovieProfile extends Component {
             return state;
         });
         getMovieInfo(movieID, (data) => {
-            this.setState({movieID,data,loadedFlag:true})
+            this.setState({movieID, data, loadedFlag: true})
         });
     }
 
@@ -36,8 +36,7 @@ class MovieProfile extends Component {
     }
 
     render() {
-        console.log(this.state);
-        const {loadedFlag,data,movieID,useDefault}=this.state;
+        const {loadedFlag, data, movieID, useDefault} = this.state;
         if (!loadedFlag)
         // render nothing before data loaded
             return (<LoadingSpin/>);
@@ -86,13 +85,13 @@ class MovieProfile extends Component {
                 </div>
                 <div className="wrapper style1 align-center">
                     <div className="row">
-                        <ReviewNumTrend movieID={movieID} pubDate={data['pubdate']||data['pubdates']}/>
+                        <ReviewNumTrend movieID={movieID} pubDate={data['pubdate'] || data['pubdates']}/>
                         {/*<ScoreTrend/>*/}
                     </div>
                 </div>
                 {/*<div className="wrapper style1 align-center">*/}
                 {/*    <div className="row">*/}
-                <SentimentProfile movieID={movieID}/>
+                <SentimentProfile id={movieID} type='movie'/>
                 {/*</div>*/}
                 {/*</div>*/}
             </div>

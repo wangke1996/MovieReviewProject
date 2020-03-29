@@ -4,7 +4,10 @@ import os
 import re
 import itertools
 import jieba
-
+import sys
+import numpy as np
+import glob
+import hashlib
 jieba.dt.cache_file = 'jieba.movie.cache'
 
 
@@ -68,6 +71,19 @@ def search_by_char(candidate_word, input_value):
     return True
 
 
+def clean_error_crawl(folder, rule='**/*.json'):
+    pattern = os.path.join(folder, rule)
+    json_files = glob.glob(pattern, recursive=True)
+    remove_files = []
+    for file in json_files:
+        data = load_json_file(os.path.join(folder, file))
+        if len(data) == 0:
+            remove_files.append(file)
+    for file in remove_files:
+        os.remove(os.path.join(folder, file))
+        print('%s removed' % file)
+
+
 def search_candidate(candidate_list, input_value, mode='char'):
     if mode == 'word':
         res = list(filter(lambda x: input_value in x, candidate_list))
@@ -75,3 +91,40 @@ def search_candidate(candidate_list, input_value, mode='char'):
         res = list(filter(lambda x: search_by_char(x, input_value), candidate_list))
     res.sort(key=len)
     return res
+
+
+def logging_with_time(s):
+    print(time.strftime('%Y.%m.%d-%H:%M:%S', time.localtime()) + ': ' + s)
+    sys.stdout.flush()
+
+
+def save_np_array(file_path, array):
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    np.save(file_path, array)
+
+
+def load_np_array(file_path):
+    return np.load(file_path)
+
+
+def write_lines(file_path, array, format_function=lambda x: x):
+    with open(file_path, 'w', encoding='utf8') as f:
+        f.write('\n'.join(map(format_function, array)))
+
+
+def read_lines(file_path, parse_function=lambda x: x):
+    with open(file_path, 'r', encoding='utf8') as f:
+        lines = f.readlines()
+    return list(map(parse_function, lines))
+
+
+def file_hash(file_path):
+    md5 = hashlib.md5()
+    buf_size = 65536
+    with open(file_path, 'rb') as f:
+        while True:
+            data = f.read(buf_size)
+            if not data:
+                break
+            md5.update(data)
+    return md5

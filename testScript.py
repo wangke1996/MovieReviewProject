@@ -1,10 +1,6 @@
-# from backend.sentiment.preprocess import WordSet, WordEmbedding, KnowledgeBase
-# from backend.sentiment import model_CNN, model_MNKG
-# import sys
-#
-# sys.modules['model_CNN'] = model_CNN
-# sys.modules['model_MNKG'] = model_MNKG
 from backend.sentiment import *
+
+"""
 from backend.analyzer import sentimentAnalyzer
 
 sentence = '炫酷 的 造型 、 充沛 的 动力 再 加上 本田 家族 运动 基因 的 传承'
@@ -31,3 +27,13 @@ for item in result:
     for k in knowledge:
         print('%s\t%s\t%s\t%f' % (k[0], k[1], k[2], k[3]))
     print('--------------------')
+"""
+from backend.analyzer.user_analyzer import test, re_crawl_html
+from backend.preprocess.clean_data import main, makeup_for_date
+from backend.preprocess.craw_movie_reviews import analysis_movie_process
+
+# test()
+# re_crawl_html()
+# makeup_for_date()
+main()
+# analysis_movie_process()

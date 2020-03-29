@@ -1,7 +1,7 @@
 import time
-from backend.crawler.douban_crawler import DoubanCrawler
+from backend.crawler.douban_api_crawler import DoubanApiCrawler
 
-crawler: DoubanCrawler = DoubanCrawler()
+crawler: DoubanApiCrawler = DoubanApiCrawler()
 
 
 def craw_intheaters_reviews():

@@ -9,3 +9,7 @@ export function isEmpty(obj) {
 export function sum(arr) {
     return arr.reduce((a, b) => a + b, 0);
 }
+
+export function toPercent(val, decimals = 0) {
+    return (val * 100).toFixed(decimals) + '%';
+}

@@ -3,7 +3,7 @@ import {Button} from 'antd';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom"
 import Home from '../../home/js/home'
 import '../css/commonTemplate.css'
-import UserProfile from '../../userProfile/js/userProfile'
+import {UserPage} from "../../user/js/userPage";
 import MovieProfile from '../../movieProfile/js/movieProfile'
 
 class CommonHeader extends Component {
@@ -89,7 +89,7 @@ class CommonTemplate extends Component {
                 <div>
                     <CommonHeader/>
                     <Route exact path="/" component={Home}/>
-                    <Route path="/userProfile" component={UserProfile}/>
+                    <Route path="/userProfile" component={UserPage}/>
                     <Route path="/movieProfile/:movieID" component={GetMovieProfile}/>
                     <CommonFooter/>
                 </div>

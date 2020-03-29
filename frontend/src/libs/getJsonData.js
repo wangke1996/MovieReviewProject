@@ -2,17 +2,27 @@
  * Created by 王颗 on 2019/2/27.
  */
 import reqwest from 'reqwest';
-
-const backendURL = 'http://101.6.69.26:5002';
+import {backendURL,debug_mode} from "./config";
+export function wrapUrl(url, randParam = false) {
+    let trueURL;
+    if (debug_mode)
+        trueURL = backendURL + url;
+    else
+        trueURL = url;
+    if (randParam)
+        trueURL += '?time=' + (new Date().getTime());
+    return trueURL;
+}
 
 function fetchData(url, callback, data = {}) {
     reqwest({
-        url: backendURL + url,
+        url: wrapUrl(url),
         type: 'json',
         method: 'get',
         contentType: 'application/json',
         data: data,
         success: callback,
+        error: callback
     });
 }
 
@@ -46,10 +56,9 @@ export function getMovieReviewsTrend(movieID, callback) {
     fetchData(url, callback);
 }
 
-export function getTargetFreqs(movieID, target, callback) {
-    const url = '/getTargetFreqs/' + movieID + '/' + target;
-    console.log(url);
-    fetchData(url, callback);
+export function getTargetFreqs(query, callback) {
+    const url = '/getTargetFreqs';
+    fetchData(url, callback, query);
 }
 
 export function getRelatedSentences(query, callback) {
@@ -67,11 +76,34 @@ export function getTargetDetail(query, callback) {
     fetchData(url, callback, query);
 }
 
-export function searchTarget(movieID, input_value, callback) {
-    if (!input_value) {
+export function searchTarget(query, callback) {
+    if (!query.input) {
         callback([]);
         return;
     }
-    const url = '/searchTarget/' + movieID + '/' + input_value;
+    const url = '/searchTarget';
+    fetchData(url, callback, query);
+}
+
+export function getUserProfile(uid, callback) {
+    const url = '/getUserProfile/' + uid;
     fetchData(url, callback);
+}
+
+export function searchUser(query, callback) {
+    const url = '/searchUser/' + query;
+    fetchData(url, callback)
+}
+
+export function getActiveUsers(callback) {
+    const url = '/getActiveUsers';
+    fetchData(url, callback);
+}
+
+export function checkUserState(uid, callback) {
+    const url = '/checkUserState/' + uid;
+    fetchData(url, callback);
+}
+export function analysisUploadedFile(file, callback) {
+    fetchData('/analysisUploadedFile', callback, {file: file});
 }

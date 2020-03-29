@@ -148,8 +148,6 @@ class ReviewNumTrend extends Component {
     }
 
     render() {
-        console.log(this.state);
-        console.log(this.props);
         const {pubDate}=this.props;
         const {loadedFlag,reviewsTrendData}=this.state;
         const lastPubDate=getLastPubDate(pubDate);
