@@ -38,7 +38,7 @@ class UserRemoteSelect extends Component {
         const {activeUsers} = this.state;
         return activeUsers.map(user => <Button key={user.id} type='link'
                                                onClick={() => this.setState({value: {key: user.id, label: user.name}})}>
-            <Avatar size='large' src={image_url(user.avatar)}/>
+            <Avatar size='large' src={user.avatar}/>
             {user.name}
         </Button>)
     };

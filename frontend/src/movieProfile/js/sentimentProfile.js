@@ -196,8 +196,6 @@ class HotTarget extends Component {
     getHotTarget = () => {
         const {id, type, sortBy} = this.props;
         const query = {id, type, sortBy};
-        console.log('query');
-        console.log(query);
         getTargetList(query, data => this.setState({data, loaded: true}));
     };
 

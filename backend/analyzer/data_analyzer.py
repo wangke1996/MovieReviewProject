@@ -184,7 +184,7 @@ class DataAnalyzer:
             return {}
         return target_freq[target]
 
-    def get_target_list(self, _id, _type, count=10, sort_by='freq', min_freq=0):
+    def get_target_list(self, _id, _type, count=10, sort_by='freq', min_freq=10):
         _, target_freq = self.analyze_profile(_id, _type)
         target_list = list(filter(lambda x: x[1]['freq'] >= min_freq, target_freq.items()))
         if sort_by == 'freq':

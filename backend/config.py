@@ -1,9 +1,13 @@
 import os
+import platform
 
 
 class Config:
     def __init__(self):
-        self.data_path = os.path.abspath('../MovieData')
+        if platform.system().lower() == 'linux':
+            self.data_path = os.path.abspath('../MovieData')
+        else:
+            self.data_path = 'D:\\MovieData'
         self.user_path = os.path.join(self.data_path, 'user')
         self.movie_path = os.path.join(self.data_path, 'subject')
         self.dataset_path = os.path.join(self.data_path, 'data')

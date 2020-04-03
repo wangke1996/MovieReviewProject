@@ -167,5 +167,5 @@ export class UserProfile extends Component {
 }
 
 UserProfile.defaultProps = {
-    uid: 'perhapsfish'
+    uid: '4026585'
 };
