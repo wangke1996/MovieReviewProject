@@ -1,0 +1,22 @@
+
+#reviewInput {
+    font-size: 1.5em
+}
+
+#analysisTable th {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#analysisTable td {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+#predictScore ul{
+    display: block;
+    margin: 0 auto;
+    font-size: 3em;
+    text-align: center;
+}

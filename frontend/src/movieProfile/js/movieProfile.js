@@ -4,13 +4,15 @@ import ReviewNumTrend from './reviewNumTrend'
 // import MovieInfo from './movieInfo'
 import {getMovieInfo} from '../../libs/getJsonData'
 import {isEmpty} from '../../libs/toolFunctions'
-import {message} from "antd";
+import {message, Typography} from "antd";
 import Summary from './summary'
 import HotComments from './hotComments'
 import BasicInfo from './basicInfo'
 import Stills from './stills'
 import LoadingSpin from '../../common/js/loadingSpin'
 import {SentimentProfile} from "./sentimentProfile";
+
+const {Title,Text} = Typography;
 
 class MovieProfile extends Component {
     loadData(movieID) {
@@ -89,11 +91,8 @@ class MovieProfile extends Component {
                         {/*<ScoreTrend/>*/}
                     </div>
                 </div>
-                {/*<div className="wrapper style1 align-center">*/}
-                {/*    <div className="row">*/}
+                <Title level={2} className='center margin-bottom'>用户对<Text type='secondary'>{data.title}</Text>的观点</Title>
                 <SentimentProfile id={movieID} type='movie'/>
-                {/*</div>*/}
-                {/*</div>*/}
             </div>
 
         )

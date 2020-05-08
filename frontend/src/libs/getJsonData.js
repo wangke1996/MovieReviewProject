@@ -2,7 +2,8 @@
  * Created by 王颗 on 2019/2/27.
  */
 import reqwest from 'reqwest';
-import {backendURL,debug_mode} from "./config";
+import {backendURL, debug_mode} from "./config";
+
 export function wrapUrl(url, randParam = false) {
     let trueURL;
     if (debug_mode)
@@ -104,6 +105,23 @@ export function checkUserState(uid, callback) {
     const url = '/checkUserState/' + uid;
     fetchData(url, callback);
 }
+
 export function analysisUploadedFile(file, callback) {
     fetchData('/analysisUploadedFile', callback, {file: file});
+}
+
+export function analysisReview(text, callback) {
+    fetchData('/analysisReview', callback, {text: text})
+}
+
+export function getDemo(callback) {
+    fetchData('/getDemo', (res) => callback(res.response));
+}
+
+export function recommend(query, callback) {
+    fetchData('/recommend', callback, query)
+}
+
+export function download(cacheId, callback) {
+    fetchData('/download/' + cacheId, callback);
 }

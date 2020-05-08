@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 from backend.crawler.douban_api_crawler import api_crawler
 from backend.analyzer import dataAnalyzer, userAnalyzer, sentimentAnalyzer
 from backend.config import CONFIG
+from backend.predictor import recommender
 import json
 import os
 import numpy as np
@@ -181,6 +182,27 @@ def upload():
         filename = secure_filename(file.filename)
         file.save(os.path.join(CONFIG.upload_folder, filename))
         return filename
+
+
+@main.route('/analysisReview')
+def analysis_review():
+    text = request.args['text']
+    return json.dumps(sentimentAnalyzer.analysis_single_review(text))
+
+
+@main.route('/getDemo')
+def get_demo():
+    return '1.从特效和技术上讲，这应该是迄今为止此类中国电影的巅峰了。磅礴恢宏，细节营造用心。2.故事层面比较糟糕，很好奇到底出于什么原因，造成几乎超过40%的台词都是后配的，而且对不上口型，明显是片子成型后彻底改词重配的。这严重影响故事质量。3.作为类型片，很多讲述方式有明显问题，比如人物不鲜明，交代不清楚，刘启变成“刘户口”，这种启字的拆解为什么不交代?李一一变成“李长条”留给谁去猜?4.很多地方增加众多根本无意义的插科打诨，笑点非常尴尬。5.这个全球化的项目中，中俄合作，稍稍出现一句法语，两句日语，美国只闪现一次国旗，美国的缺席，出于什么原因?好奇。6.科幻特效技术有了巨大进步，但技术这只是科幻电影的一部分。'
+
+
+@main.route('/recommend')
+def recommend():
+    _id = request.args['id']
+    _type = request.args.get('type', 'user')  # 'user' for uid, 'cache' for cache id
+    candidate = request.args.get('candidate', 100)
+    num = request.args.get('num', 10)
+    return json.dumps(recommender.recommend(_id, _type, candidate_num=candidate, recommend_num=num))
+
 # @main.route('/', defaults={'path': ''})
 # @main.route('/<path:path>')
 # def index(path):

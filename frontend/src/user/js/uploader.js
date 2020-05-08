@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Upload, message, Spin, Button, Popconfirm,} from 'antd';
 import {InboxOutlined} from '@ant-design/icons';
-import {analysisUploadedFile, wrapUrl} from "../../libs/getJsonData";
+import {analysisUploadedFile, download, wrapUrl} from "../../libs/getJsonData";
 
 const {Dragger} = Upload;
 
@@ -9,17 +9,14 @@ const {Dragger} = Upload;
 export class Uploader extends Component {
     state = {
         file: '',
-        loading:false
+        loading: false,
+        cacheId: null
     };
 
-    onFileChange=(info)=> {
+    onFileChange = (info) => {
         const {status} = info.file;
-        if (status !== 'uploading') {
-            console.log(info);
-        }
         if (status === 'done') {
             message.success(`${info.file.name} 上传成功`);
-            console.log(info);
             this.setState({file: info.file.response})
         } else if (status === 'error') {
             message.error(`${info.file.name} 上传失败`);
@@ -27,10 +24,11 @@ export class Uploader extends Component {
     };
 
     onSubmit = () => {
-        this.setState({loading: true});
+        this.setState({loading: true, cacheId: null});
         analysisUploadedFile(this.state.file, (res) => {
             if (res.status === 'success') {
                 message.success('解析成功！');
+                this.setState({cacheId: res.cacheID});
                 this.props.setProfile(res.cacheID)
             } else
                 message.error(res.message);
@@ -38,9 +36,20 @@ export class Uploader extends Component {
         })
     };
 
+    downloadResult = () => {
+        const {cacheId} = this.state;
+        if (!cacheId) {
+            message.error('出错啦，请重新上传');
+            return;
+        }
+        download(cacheId, () => {
+        });
+    };
+
     render() {
+        const {loading, cacheId} = this.state;
         return (
-            <Spin className='loadingSpin' size='large' tip='正在解析上传的评论' spinning={this.state.loading}>
+            <Spin className='loadingSpin margin-bottom' size='large' tip='正在解析上传的评论' spinning={loading}>
                 <Dragger name='file' action={wrapUrl('/upload', false)} multiple={false} onChange={this.onFileChange}>
                     <p className="ant-upload-drag-icon">
                         <InboxOutlined/>
@@ -51,8 +60,9 @@ export class Uploader extends Component {
                     </p>
                 </Dragger>
                 <Popconfirm className='large margin-top' title="确认上传？" onConfirm={this.onSubmit}>
-                    <Button type='danger'>确认上传</Button>
+                    <Button size='large' type='danger'>确认上传</Button>
                 </Popconfirm>
+                {!loading && cacheId ? <Button size='large' className='margin-left' type='link' onClick={this.downloadResult}>下载解析结果</Button> : []}
             </Spin>
         )
     }

@@ -19,6 +19,14 @@ class SentimentAnalyzer(object):
             result))
         return triples
 
+    def analysis_single_review(self, review):
+        sentences = split_sentences(review)
+        cut_sentences_list = cut_sentences(sentences)
+        triples = concat_list(map(self.analysis_single_sentence, cut_sentences_list))
+
+        predict_score = round(5 * len([x for x in triples if x['sentiment'] != 'NEG']) / len(triples))
+        return {'data': triples, 'score': predict_score}
+
     def analysis_multi_sentences(self, cut_sentences_list):
         triples = concat_list(map(self.analysis_single_sentence, cut_sentences_list))
         result = {}

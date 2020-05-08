@@ -244,6 +244,10 @@ class TargetDetail extends Component {
         getTargetDetail(query, this.setStateFromData);
     };
 
+    componentDidMount() {
+        this.getData();
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         const {target, id, type} = this.props;
         if (id !== prevProps.id || type !== prevProps.type || target !== prevProps.target) {
@@ -318,7 +322,9 @@ export class SentimentProfile extends Component {
                 </Radio.Group>
                 <HotTarget id={id} type={type} sortBy={sortBy} setTarget={this.setTarget.bind(this)}/>
                 <SearchTarget id={id} type={type} setTarget={this.setTarget.bind(this)}/>
-                <TargetDetail id={id} type={type} target={target} setTarget={this.setTarget.bind(this)}/>
+                {target ?
+                    <TargetDetail id={id} type={type} target={target} setTarget={this.setTarget.bind(this)}/>
+                    : []}
             </div>
         )
     }

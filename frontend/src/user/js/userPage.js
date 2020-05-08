@@ -7,9 +7,10 @@ import {image_url} from "../../libs/toolFunctions";
 import {UserProfile} from "./userProfile";
 import {Uploader} from "./uploader";
 import {SentimentProfile} from "../../movieProfile/js/sentimentProfile";
+import {RecommendMovie} from "./recommendMovie";
 
 const {confirm} = Modal;
-const {Title, Text} = Typography;
+const {Title, Text, Paragraph} = Typography;
 const {Search} = Input;
 const {Option} = Select;
 
@@ -36,7 +37,7 @@ class UserRemoteSelect extends Component {
     };
     activeUserList = () => {
         const {activeUsers} = this.state;
-        return activeUsers.map(user => <Button key={user.id} type='link'
+        return activeUsers.map(user => <Button key={user.id} type='link' className='margin-top margin-right'
                                                onClick={() => this.setState({value: {key: user.id, label: user.name}})}>
             <Avatar size='large' src={user.avatar}/>
             {user.name}
@@ -68,7 +69,6 @@ class UserRemoteSelect extends Component {
 
     render() {
         const {fetching, data, value} = this.state;
-        console.log(value);
         return (
             <div>
                 <Row type='flex'>
@@ -93,6 +93,8 @@ class UserRemoteSelect extends Component {
                         <Button onClick={() => this.props.submit(value.key)}>查看用户画像</Button>
                     </Col>
                 </Row>
+                <Title className='margin-top' level={3}>活跃用户top10</Title>
+                <Paragraph type='secondary'>可直接点击选中</Paragraph>
                 {this.activeUserList()}
             </div>
         );
@@ -106,7 +108,6 @@ export class UserPage extends Component {
         loading: false,
     };
     changeUid = (uid) => {
-        console.log(uid);
         checkUserState(uid, res => {
             const state = res.response;
             if (state === 'ok')
@@ -135,8 +136,7 @@ export class UserPage extends Component {
     setProfile = (uid) => this.setState({uid, type: 'cache'});
 
     render() {
-        const {uid, type, loading} = this.state;
-        console.log(uid);
+        const {uid, type} = this.state;
         return (
             <div id="Content" className="UserProfile">
                 <div id="banner">
@@ -160,6 +160,7 @@ export class UserPage extends Component {
                 </Row>
                 {type === 'user' ? <UserProfile uid={uid}/> :
                     <SentimentProfile id={uid} type={type}/>}
+                <RecommendMovie id={uid} type={type}/>
             </div>
         )
     }

@@ -13,6 +13,18 @@ from collections import Counter
 import numpy as np
 
 
+def clean_error_profile():
+    folder = '/data/wangke/MovieProject/MovieData/data/comment/profile'
+
+    # for file in os.listdir(folder):
+        # origin_file = os.path.join(folder, file)
+        # new_file = os.path.join(folder, '%s.new' % file)
+        # data = load_json_file(origin_file)
+        # new_data = list(map(lambda x: x if len(x) == 0 else [[y[0], y[1], y[4]] for y in x], data))
+        # save_json_file(new_file, new_data)
+        # os.rename(os.path.join(folder, file), os.path.join(folder, file[:-4]))
+
+
 def get_true_movie_id(movie_ids):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'}
@@ -282,4 +294,5 @@ def main():
     # manual_crawl_user_review_with_login()
     # analysis_process()
     # merge_profile()
-    clean_error_crawl(CONFIG.movie_path, '*/info.json')
+    # clean_error_crawl(CONFIG.movie_path, '*/info.json')
+    clean_error_profile()

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../css/home.css';
 import MovieInTheater from '../../home/js/movieInTheater'
-
+import {Row,Col} from 'antd';
 class Home extends Component {
 
     render() {
@@ -11,9 +11,10 @@ class Home extends Component {
                 <div id="banner">
                     <h2>Hi! 欢迎来到 <strong>NGN影评</strong>.</h2>
                     <span className="byline">
-                        这是一个简单的演示系统，利用<a href="/knowledgeGraph">知识图谱</a>
-                        对最新电影评论进行<a href="/reviewAnalysis">情感分析</a>，
-                        从而挖掘用户观点或电影风评。
+                        这是一个基于用户影评的观点挖掘系统<br/>
+                        您可在<a href="/reviewAnalysis">评论解析</a>页面查看本系统的基础观点挖掘功能<br/>
+                        还可前往<a href='/userProfile'>用户画像</a>页面领略观点挖掘如何为商家分析用户特征<br/>
+                        或者，在下方选择一部正在热映的电影，看看大家的观点吧！<br/>
                     </span>
                     <hr/>
                 </div>
@@ -25,54 +26,54 @@ class Home extends Component {
                         className="container special">
                         <header>
                             <h2> 系统功能 </h2>
-                            <span className="byline">Ipsum volutpat consectetur orci metus consequat imperdiet duis integer semper magna.</span>
+                            {/*<span className="byline">Ipsum volutpat consectetur orci metus consequat imperdiet duis integer semper magna.</span>*/}
                         </header>
-                        <div className="row">
-                            <article className="3u special">
-                                <a href="/knowledgeGraph" className="image featured"><img
-                                    src={prefix + "/webTemplate/images/pic07.jpg"}
-                                    alt=""/></a>
-                                <header>
-                                    <h3><a href="/knowledgeGraph">知识图谱</a></h3>
-                                </header>
-                                <p>
-                                    电影领域知识图谱可视化展示，包括常见的评价对象、描述词和它们的相关关联
-                                </p>
-                            </article>
-                            <article className="3u special">
+                        <Row type='flex' justify="space-around">
+                            {/*<article className="3u special">*/}
+                            {/*    <a href="/knowledgeGraph" className="image featured"><img*/}
+                            {/*        src={prefix + "/webTemplate/images/pic07.jpg"}*/}
+                            {/*        alt=""/></a>*/}
+                            {/*    <header>*/}
+                            {/*        <h3><a href="/knowledgeGraph">知识图谱</a></h3>*/}
+                            {/*    </header>*/}
+                            {/*    <p>*/}
+                            {/*        电影领域知识图谱可视化展示，包括常见的评价对象、描述词和它们的相关关联*/}
+                            {/*    </p>*/}
+                            {/*</article>*/}
+                            {/*<article className="3u special">*/}
+                            <Col className='center' span={6}>
                                 <a href="/reviewAnalysis" className="image featured"><img
                                     src={prefix + "/webTemplate/images/pic08.jpg"}
                                     alt=""/></a>
                                 <header>
                                     <h3><a href="/reviewAnalysis">评论解析</a></h3>
                                 </header>
-                                <p>
                                     上传单条或批量影评获取电影的细粒度评价
-                                </p>
-                            </article>
-                            <article className="3u special">
+                            </Col>
+                            {/*</article>*/}
+                            {/*<article className="3u special">*/}
+                            <Col className='center' span={6}>
                                 <a href="/movieProfile" className="image featured"><img
                                     src={prefix + "/webTemplate/images/pic09.jpg"}
                                     alt=""/></a>
                                 <header>
                                     <h3><a href="/movieProfile">电影风评</a></h3>
                                 </header>
-                                <p>
                                     查询当下或历史热门电影，获取该电影的细粒度评价
-                                </p>
-                            </article>
-                            <article className="3u special">
+                            </Col>
+                            {/*</article>*/}
+                            {/*<article className="3u special">*/}
+                            <Col className='center' span={6}>
                                 <a href="/userProfile" className="image featured"><img
                                     src={prefix + "/webTemplate/images/pic10.jpg"}
                                     alt=""/></a>
                                 <header>
                                     <h3><a href="/userProfile">用户画像</a></h3>
                                 </header>
-                                <p>
                                     上传用户的评论，获取用户的电影审美
-                                </p>
-                            </article>
-                        </div>
+                            </Col>
+                            {/*</article>*/}
+                        </Row>
                     </section>
                     <hr/>
                 </div>

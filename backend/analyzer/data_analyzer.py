@@ -163,8 +163,9 @@ class DataAnalyzer:
         else:
             self.set_lock('movie', movie_id)
             reviews = api_crawler.get_movie_reviews(movie_id, reviews_count=max_review_count)
+            comments = api_crawler.get_movie_comments(movie_id, max_comment_count)
             results = {}
-            for review in reviews:
+            for review in reviews + comments:
                 create_time = review["created_at"].split()[0]
                 rate = review['rating']['value']
                 if create_time not in results:

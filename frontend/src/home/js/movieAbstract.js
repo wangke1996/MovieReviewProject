@@ -5,6 +5,7 @@ class MovieAbstract extends Component {
 
 
     render() {
+        console.log(this.props.Star);
         return (
             <article>
                 <a href={this.props.Hyperlink} className="image featured">

@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Link} from "react-router-dom"
 import Home from '../../home/js/home'
 import '../css/commonTemplate.css'
 import {UserPage} from "../../user/js/userPage";
+import {AnalysisView} from "../../reviewAnalysis/js/analysisView";
 import MovieProfile from '../../movieProfile/js/movieProfile'
 
 class CommonHeader extends Component {
@@ -14,7 +15,7 @@ class CommonHeader extends Component {
                     <header>
                         <h1><a href="#" id="logo">NGN影评</a></h1>
                         <hr/>
-                        <span className="byline">基于知识图谱的情感分析系统</span>
+                        <span className="byline">基于用户评论的观点系统</span>
                     </header>
                     <footer>
                         <a href="#Content" className="button circled special scrolly">Go</a>
@@ -24,7 +25,7 @@ class CommonHeader extends Component {
                 <nav id="nav">
                     <ul>
                         <li><Link to="/">主页</Link></li>
-                        <li><Link to="/knowledgeGraph">知识图谱</Link></li>
+                        {/*<li><Link to="/knowledgeGraph">知识图谱</Link></li>*/}
                         <li><Link to="/reviewAnalysis">评论解析</Link></li>
                         <li><Link to="/movieProfile">电影风评</Link></li>
                         <li><Link to="/userProfile">用户画像</Link></li>
@@ -91,6 +92,7 @@ class CommonTemplate extends Component {
                     <Route exact path="/" component={Home}/>
                     <Route path="/userProfile" component={UserPage}/>
                     <Route path="/movieProfile/:movieID" component={GetMovieProfile}/>
+                    <Route path="/reviewAnalysis" component={AnalysisView}/>
                     <CommonFooter/>
                 </div>
             </Router>
