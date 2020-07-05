@@ -123,5 +123,10 @@ export function recommend(query, callback) {
 }
 
 export function download(cacheId, callback) {
-    fetchData('/download/' + cacheId, callback);
+    // reqwest(wrapUrl('/download/' + cacheId), (resp) => {
+    //     callback(resp);
+    //     console.log(resp);
+    //     if (resp === 'success')
+            window.open(wrapUrl('/download/' + cacheId));
+    // });
 }

@@ -1,5 +1,5 @@
 from flask import render_template
-from flask import Blueprint, request
+from flask import Blueprint, request, send_from_directory
 from werkzeug.utils import secure_filename
 from backend.crawler.douban_api_crawler import api_crawler
 from backend.analyzer import dataAnalyzer, userAnalyzer, sentimentAnalyzer
@@ -203,6 +203,11 @@ def recommend():
     num = request.args.get('num', 10)
     return json.dumps(recommender.recommend(_id, _type, candidate_num=candidate, recommend_num=num))
 
+
+@main.route('/download/<cache_id>')
+def send_result(cache_id):
+    return send_from_directory(os.path.abspath(CONFIG.upload_analysis_cache_folder), cache_id + '.json',
+                               as_attachment=True)
 # @main.route('/', defaults={'path': ''})
 # @main.route('/<path:path>')
 # def index(path):
